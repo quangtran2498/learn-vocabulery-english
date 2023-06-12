@@ -8,6 +8,7 @@ import { makeStyles } from "@mui/styles";
 import { FastField, Form, Formik } from "formik";
 import React from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -142,8 +143,10 @@ const Practive = () => {
                               className=""
                               style={{ display: "flex", alignItems: "center" }}
                             >
-                              <div className="" onClick={() => hanldeShowAnswer(index)}>
-                                <VisibilityIcon sx={{ marginRight: "5px" }} />
+                              <div className="" style={{ marginRight: "5px" }} onClick={() => hanldeShowAnswer(index)}>
+                                
+                              {showAnswer===index ? <VisibilityOffIcon/> : <VisibilityIcon/>}
+                                
                               </div>
                               {showAnswer===index && (
                                 <div className="">
