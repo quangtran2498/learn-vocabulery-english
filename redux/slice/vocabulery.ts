@@ -2,17 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface DataVocabuleryCustomI {
-    vocabulary: "",mean: ""
+  vocabulary: "";
+  mean: "";
 }
 
 export interface Vocabulery {
   vocabuleryNumber: number;
-  dataVocabuleryCustom:DataVocabuleryCustomI[]
+  dataVocabuleryCustom: DataVocabuleryCustomI[];
 }
 
 const initialState: Vocabulery = {
-    vocabuleryNumber: 0,
-    dataVocabuleryCustom:[]
+  vocabuleryNumber: 0,
+  dataVocabuleryCustom: [{ vocabulary: "", mean: "" }],
 };
 
 const learnVocabulery = createSlice({
@@ -22,11 +23,15 @@ const learnVocabulery = createSlice({
     setVocabuleryNumber: (state, action: PayloadAction<number>) => {
       state.vocabuleryNumber = action.payload;
     },
-    setDataVocabuleryCustom: (state, action: PayloadAction<DataVocabuleryCustomI[]>) => {
-        state.dataVocabuleryCustom = action.payload;
-      },
+    setDataVocabuleryCustom: (
+      state,
+      action: PayloadAction<DataVocabuleryCustomI[]>
+    ) => {
+      state.dataVocabuleryCustom = action.payload;
+    },
   },
 });
 
-export const { setVocabuleryNumber,setDataVocabuleryCustom } = learnVocabulery.actions;
+export const { setVocabuleryNumber, setDataVocabuleryCustom } =
+  learnVocabulery.actions;
 export default learnVocabulery.reducer;

@@ -37,11 +37,13 @@ const useStyles = makeStyles((theme) => {
 });
 
 const Practive = () => {
-  const dataVocablery = store.getState().learnVocabulery.dataVocabuleryCustom;
+  const dataVocablary = store.getState().learnVocabulery.dataVocabuleryCustom;
   const vocabuleryNumber = store.getState().learnVocabulery.vocabuleryNumber;
-
+  
   const [changeDirection, setChangeDirection] = React.useState("vn");
-  const [dataVocabulary, setDataVocabulary] = React.useState(dataVocablery);
+  const [dataVocabularys, setDataVocabularys] = React.useState(dataVocablary);
+  console.log(dataVocabularys,"dataVocabularys");
+  
   const [showAnswer, setShowAnswer] = React.useState<number | null>(null);
 
   const classes = useStyles();
@@ -52,7 +54,7 @@ const Practive = () => {
     };
 
     let answers = [];
-    for (let i = 0; i < vocabuleryNumber; i++) {
+    for (let i = 0; i < dataVocabularys.length; i++) {
       answers.push(inputVocabulary);
     }
     return { answers };
@@ -62,49 +64,25 @@ const Practive = () => {
     showAnswer === index ? setShowAnswer(null) : setShowAnswer(index)
   };
 
-  //   function shuffleArray(array:any) {
-
-  //     for (var i = array.length - 1; i > 0; i--) {
-  //         // Generate random number
-  //         var j = Math.floor(Math.random() * (i + 1));
-
-  //         var temp = array[i];
-  //         console.log(temp,"temp");
-
-  //         array[i] = array[j];
-  //         array[j] = temp;
-  //     }
-
-  //     return array;
-  //  }
-
   return (
     <Formik initialValues={genInitialValue().answers} onSubmit={() => {}}>
       {(formik) => {
-        const hanldeChangeDirection = () => {
-          // console.log(dadaTest,dataVocabulary,"1231232");
 
-          const newArrVocabulary = [...dataVocabulary].sort(
+        const hanldeChangeDirection = () => {
+          const newArrVocabulary = [...dataVocabularys].sort(
             () => Math.random() - 0.5
           );
 
-          setDataVocabulary(newArrVocabulary);
-          changeDirection === "vn"
-            ? setChangeDirection("en")
-            : setChangeDirection("vn");
+          setDataVocabularys(newArrVocabulary);
+          changeDirection === "vn" ? setChangeDirection("en") : setChangeDirection("vn");
           formik.handleReset();
         };
 
         const checkValue = (index: number) => {
           if (changeDirection === "vn") {
-            return dataVocabulary[index]?.vocabulary ===
-              formik.values[index]?.mean
-              ? true
-              : false;
+            return dataVocabularys[index]?.vocabulary === formik.values[index]?.mean ? true : false;
           } else {
-            return dataVocabulary[index]?.mean === formik.values[index]?.mean
-              ? true
-              : false;
+            return dataVocabularys[index]?.mean === formik.values[index]?.mean ? true : false;
           }
         };
 
@@ -112,7 +90,7 @@ const Practive = () => {
           <Form>
             <div className="" style={{ padding: "20px" }}>
               <div>
-                {Array(vocabuleryNumber)
+                {Array(dataVocabularys.length)
                   .fill(0)
                   .map((item, index) => {
                     return (
@@ -122,9 +100,7 @@ const Practive = () => {
                         style={{ display: "flex", alignItems: "center" }}
                       >
                         <div className="" style={{ marginRight: "30px" }}>
-                          {changeDirection === "vn"
-                            ? dataVocabulary[index]?.mean
-                            : dataVocabulary[index]?.vocabulary}
+                          {changeDirection === "vn" ? dataVocabularys[index]?.mean : dataVocabularys[index]?.vocabulary}
                         </div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <FastField
@@ -150,16 +126,11 @@ const Practive = () => {
                               </div>
                               {showAnswer===index && (
                                 <div className="">
-                                  {changeDirection === "vn"
-                                    ? dataVocabulary[index].vocabulary
-                                    : dataVocabulary[index].mean}
+                                  {changeDirection === "vn" ? dataVocabularys[index].vocabulary : dataVocabularys[index].mean}
                                 </div>
                               )}
                             </div>
                           </div>
-                          {/* {checkValue(index) && (
-                            <audio autoPlay src="/assets/audio/ok.mp3"></audio>
-                          )} */}
                         </div>
                       </div>
                     );
